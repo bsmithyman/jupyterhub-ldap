@@ -1,11 +1,29 @@
 #!/bin/bash
 
-sed -i "/^base.*$/d" /etc/ldap.conf
-sed -i "/^uri.*$/d" /etc/ldap.conf
+export CONF=/etc/ldap.conf
 
-cat >> /etc/ldap.conf << END
-base $BASE
-uri $URI
+if [ "$BASE" ]; then 
+  sed -i "/^base.*$/d" $CONF
+  echo "base $BASE" >> $CONF 
+fi
+
+if [ "$URI" ]; then
+  sed -i "/^uri.*$/d" $CONF
+  echo "uri $URI" >> $CONF
+fi
+
+if [ "$BINDDN" ]; then
+  sed -i "/^binddn.*$/d" $CONF
+  echo "binddn $BINDDN" >> $CONF
+fi
+
+if [ "$BINDPW" ]; then
+  sed -i "/^bindpw.*$/d" $CONF
+  echo "bindpw $BINDPW" >> $CONF
+fi
+
+cat >> $CONF << END
+pam_password crypt
 END
 
 chmod 777 /home
