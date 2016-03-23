@@ -27,4 +27,4 @@ pam_password crypt
 END
 
 chmod 777 /home
-jupyterhub -f /srv/jupyterhub/jupyterhub_config.py
+jupyterhub -f /srv/jupyterhub/jupyterhub_config.py --no-ssl
